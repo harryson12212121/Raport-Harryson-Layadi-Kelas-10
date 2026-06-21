@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Hasil Belajar - Harryson Layadi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #faf6ee; /* Warna Krem Dasar sesuai gambar */
+            --card-bg: rgba(255, 252, 245, 0.85); /* Krem transparan */
+            --text-main: #1f2729;
+            --text-muted: #526266;
+            --primary: #005b66; /* Deep Teal */
+            --primary-hover: #00444d;
+            --accent: #e5f2f4; /* Teal muda transparan */
+            --border: #e6ded2;
+            --error: #de5d4e;
+            --coral-red: #de5d4e; /* Coral */
+            --success-green: #1e7e43; /* Hijau Sukses */
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: url('image_43d739.jpg');
+            background-repeat: repeat-x;
+            background-position: bottom center;
+            background-size: contain;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 40px 20px 120px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0, 91, 102, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 900px;
+            animation: fadeIn 0.6s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Bingkai Ornamen Atas sesuai Palette Gambar */
+        .cultural-banner {
+            height: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--coral-red) 0%, #f0a38d 35%, #007c8c 70%, var(--primary) 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        /* Tampilan header nama murid */
+        .header-identitas {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background-color: rgba(245, 238, 226, 0.5);
+            border-left: 4px solid var(--primary);
+        }
+        .header-identitas h1 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .identitas-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .identitas-grid p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .identitas-grid p strong {
+            color: var(--text-main);
+        }
+
+        h2 {
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: -10px;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* --- STYLE FORM LOGIN --- */
+        .login-box {
+            display: block;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .cultural-logo {
+            font-size: 44px;
+            margin-bottom: 10px;
+            color: var(--coral-red);
+            opacity: 0.9;
+        }
+
+        .input-group {
+            position: relative;
+            margin: 25px 0;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.7);
+            outline: none;
+            text-align: center;
+        }
+
+        input[type="password"]:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px var(--accent);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 91, 102, 0.2);
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 91, 102, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .error-msg {
+            color: var(--error);
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            font-weight: 500;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* --- STYLE LAYAR LOCKOUT & TRANSISI --- */
+        .fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            color: #ffffff;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #lockoutScreen {
+            background-color: #b82626; /* Merah */
+        }
+
+        #successScreen {
+            background-color: var(--success-green); /* Hijau */
+        }
+
+        .fullscreen-overlay h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .fullscreen-overlay p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .counter-circle {
+            font-size: 60px;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.2);
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* --- STYLE KONTEN RAPORT --- */
+        .raport-box {
+            display: none;
+        }
+
+        /* Animasi Smooth Glide Up */
+        .smooth-glide {
+            animation: smoothGlideUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .tab-accordion {
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .tab-header {
+            background-color: rgba(253, 253, 251, 0.8);
+            padding: 16px 20px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            border-bottom: 1px solid transparent;
+        }
+
+        .tab-header:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .tab-icon {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+
+        .tab-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .tab-accordion.active .tab-content {
+            max-height: 3000px; 
+        }
+
+        .tab-accordion.active .tab-header {
+            border-bottom-color: var(--border);
+            background-color: var(--accent);
+        }
+
+        .tab-accordion.active .tab-icon {
+            transform: rotate(180deg);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            padding: 15px 20px 25px 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background-color: rgba(245, 238, 226, 0.6);
+        }
+
+        th.mapel, td.mapel { width: 30%; }
+        th.nilai, td.nilai { width: 10%; }
+        th.kompetensi, td.kompetensi { width: 60%; }
+        td.no { font-weight: 500; color: var(--text-muted); width: 5%; }
+        td.mapel { font-weight: 500; color: var(--text-main); }
+        td.kompetensi { color: var(--text-muted); font-size: 13px; line-height: 1.6; text-align: justify; }
+
+        .text-center { text-align: center; }
+
+        .badge {
+            background: var(--accent);
+            color: var(--primary);
+            border: 1px solid rgba(0, 91, 102, 0.15);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-logout {
+            background-color: #f5eee2;
+            color: var(--text-muted);
+            box-shadow: none;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .btn-logout:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        /* --- ANIMASI KEYFRAMES --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes smoothGlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="lockoutScreen" class="fullscreen-overlay">
+    <h1>Akses Terkunci!</h1>
+    <p>Terlalu banyak mencoba. Silakan coba lagi dalam:</p>
+    <div id="countdownBox" class="counter-circle">30</div>
+</div>
+
+<div id="successScreen" class="fullscreen-overlay">
+    <h1>Berhasil Memverifikasi!</h1>
+    <p>Mengakses raport dalam:</p>
+    <div id="successCountdownBox" class="counter-circle">3</div>
+</div>
+
+<div class="container">
+    <div class="cultural-banner"></div>
+
+    <div id="loginBox" class="login-box">
+        <div class="cultural-logo">🌸</div>
+        <h2>Akses Raport Digital</h2>
+        <p class="subtitle" id="loginSubtitle">Silakan masukkan password untuk melihat laporan hasil belajar Anda.</p>
+        
+        <div class="input-group">
+            <input type="password" id="passwordInput" placeholder="Masukkan Password...">
+        </div>
+        <button onclick="cekPassword()">Buka Raport</button>
+        <p id="error" class="error-msg">Password salah! Coba periksa kembali.</p>
+    </div>
+
+    <div id="raportBox" class="raport-box">
+        <div class="header-identitas">
+            <h1>Harryson Layadi</h1>
+            <div class="identitas-grid">
+                <p><strong>NIS/NISN:</strong> 1550 / 0109381115</p>
+                <p><strong>Kelas/Fase:</strong> X.3 / E</p>
+                <p><strong>Sekolah:</strong> SMAS Cinta Kasih Tzu Chi</p>
+                <p><strong>Tahun Ajaran:</strong> 2025/2026</p>
+            </div>
+        </div>
+
+        <h2>Laporan Hasil Belajar</h2>
+        <p class="subtitle">Klik pada semester untuk membuka atau menutup detail transkrip nilai</p>
+        
+        <div class="tab-accordion">
+            <div class="tab-header" onclick="toggleTab(this)">
+                <span>Semester 1</span>
+                <span class="tab-icon">▼</span>
+            </div>
+            <div class="tab-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-center no">No</th>
+                                <th class="mapel">Mata Pelajaran</th>
+                                <th class="text-center nilai">Nilai Akhir</th>
+                                <th class="kompetensi">Capaian Kompetensi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="text-center no">1</td><td class="mapel">Pendidikan Agama Buddha dan Budi Pekerti</td><td class="text-center nilai"><span class="badge">93</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal harmoni dan kedamaianku dalam bermeditasi serta indahnya pengalaman kesadaranku, melaksanakan meditasi disertai keyakinan dan kebijaksanaan melalui pengembangan batin.</td></tr>
+                            <tr><td class="text-center no">2</td><td class="mapel">Pendidikan Pancasila</td><td class="text-center nilai"><span class="badge">85</span></td><td class="kompetensi">Mencapai kompetensi dengan baik dalam hal menjelaskan apa yang dimaksud identitas, baik pada aspek jenis identitas maupun pembentukannya, mampu mengenali dan membangun kesadaran bahwa ada keragaman identitas yang kita miliki sebagai sebuah bangsa.</td></tr>
+                            <tr><td class="text-center no">3</td><td class="mapel">Bahasa Indonesia</td><td class="text-center nilai"><span class="badge">91</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menganalisis struktur dan kaidah kebahasaan teks laporan hasil observasi, menulis teks anekdot dalam bentuk narasi dan gambar lewat media digital, mendemonstrasikan hikayat melalui drama dengan ekspresi, kerja sama, dan kreatif.</td></tr>
+                            <tr><td class="text-center no">4</td><td class="mapel">Bahasa Inggris</td><td class="text-center nilai"><span class="badge">93</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal memahami fungsi berbagai ekspresi introduction serta menerapkannya dengan penggunaan dan pengucapan yang tepat, memahami, menganalisis, dan menulis Descriptive text dengan struktur dan unsur kebahasaan yang tepat.</td></tr>
+                            <tr><td class="text-center no">5</td><td class="mapel">Matematika (Umum)</td><td class="text-center nilai"><span class="badge">99</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menentukan sifat-sifat eksponen, bentuk akar, dan logaritma, menentukan pengertian barisan dan deret aritmatika dan geometri, memecahkan masalah perbandingan trigonometri pada segitiga siku-siku.</td></tr>
+                            <tr><td class="text-center no">6</td><td class="mapel">Ilmu Pengetahuan Alam</td><td class="text-center nilai"><span class="badge">93</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal mentransformasikan bentuk energi, merancang prosedur kerja ilmiah, menganalisis faktor penyebab menurunnya keanekaragaman hayati, menentukan letak suatu unsur berdasarkan konfigurasi elektron. Perlu peningkatan dalam hal menyajikan hasil pengukuran.</td></tr>
+                            <tr><td class="text-center no">7</td><td class="mapel">Ilmu Pengetahuan Sosial</td><td class="text-center nilai"><span class="badge">91</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menganalisis pengetahuan dasar geografi, pemetaan, penginderaan jauh, sistem informasi geografi dan penelitian geografi, menganalisis pengantar ilmu sejarah, cara berpikir sejarah, penelitian sejarah dan asal-usul nenek moyang bangsa Indonesia, menganalisis dan mengevaluasi tindakan sosial dalam perilaku sehari-hari, menganalisis strategi kelangkaan dan menyusun skala prioritas serta menerapkan ketiga kegiatan ekonomi dalam usaha.</td></tr>
+                            <tr><td class="text-center no">8</td><td class="mapel">Informatika</td><td class="text-center nilai"><span class="badge">93</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menerapkan berpikir komputasional untuk mengolah data menggunakan MS. Excel, membuat artikel digital menggunakan website dasar google sites, mengimplementasikan jaringan dasar dengan konsep VLAN via cisco packet tracer.</td></tr>
+                            <tr><td class="text-center no">9</td><td class="mapel">Pendidikan Jasmani, Olahraga, dan Kesehatan</td><td class="text-center nilai"><span class="badge">90</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal melakukan teknik dasar permainan bola basket (free throw) dan bola voli (passing bawah) dengan benar, melakukan servis forehand dan backhand dengan ayunan, sikap kaki, akurasi yang tepat, melakukan lari jarak pendek dengan start, akselerasi, finish dengan posisi tubuh yang benar.</td></tr>
+                            <tr><td class="text-center no">10</td><td class="mapel">Seni dan Budaya</td><td class="text-center nilai"><span class="badge">88</span></td><td class="kompetensi">Mencapai kompetensi dengan baik dalam hal mengidentifikasi makna filosofis tari saman yang mencerminkan nilai kebersamaan dan kekompakan serta mempraktikkan gerak dasar tari saman.</td></tr>
+                            <tr><td class="text-center no">11</td><td class="mapel">Bahasa Mandarin</td><td class="text-center nilai"><span class="badge">93</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menanyakan dan menjelaskan kewarganegaraan, kontak informasi, penyebutan waktu, membuat janji, harga, penyebutan nominal uang, rencana akhir pekan, cuaca, sifat orang, gejala sakit, kondisi kesehatan dan meminta bantuan (Level Menengah).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-accordion">
+            <div class="tab-header" onclick="toggleTab(this)">
+                <span>Semester 2</span>
+                <span class="tab-icon">▼</span>
+            </div>
+            <div class="tab-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-center no">No</th>
+                                <th class="mapel">Mata Pelajaran</th>
+                                <th class="text-center nilai">Nilai Akhir</th>
+                                <th class="kompetensi">Capaian Kompetensi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="text-center no">1</td><td class="mapel">Pendidikan Agama Buddha dan Budi Pekerti</td><td class="text-center nilai"><span class="badge">96</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal memahami ilmu pengetahuan dan teknologi serta bijaksana dalam menyikapi perkembangan teknologi, memiliki pengetahuan tentang berdamai dengan perubahan dan memanfaatkan Iptek untuk perkembangan agama Buddha.</td></tr>
+                            <tr><td class="text-center no">2</td><td class="mapel">Pendidikan Pancasila</td><td class="text-center nilai"><span class="badge">90</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal mengidentifikasi beberapa contoh kasus wilayah dan sikap menjaga keutuhan NKRI.</td></tr>
+                            <tr><td class="text-center no">3</td><td class="mapel">Bahasa Indonesia</td><td class="text-center nilai"><span class="badge">91</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menyajikan teks negosiasi dalam bentuk surat dan praktik di pasar secara runtut, menceritakan biografi tokoh secara kreatif sebagai teladan, mendemonstrasikan musikalisasi puisi dengan penghayatan dan kreativitas tim.</td></tr>
+                            <tr><td class="text-center no">4</td><td class="mapel">Bahasa Inggris</td><td class="text-center nilai"><span class="badge">91</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal memahami, menganalisis, dan menulis Recount text dengan struktur dan unsur kebahasaan yang tepat, memahami, menganalisis, dan menulis Report text dengan struktur dan unsur kebahasaan yang tepat.</td></tr>
+                            <tr><td class="text-center no">5</td><td class="mapel">Matematika (Umum)</td><td class="text-center nilai"><span class="badge">96</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menghitung sifat persamaan kuadrat, fungsi kuadrat dalam bentuk aljabar, tabel nilai dan grafik, menyelesaikan masalah kontekstual dengan statistika, aturan pencacahan, peluang kejadian, dan peluang kejadian majemuk.</td></tr>
+                            <tr><td class="text-center no">6</td><td class="mapel">Ilmu Pengetahuan Alam</td><td class="text-center nilai"><span class="badge">95</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menganalisis gerak dua dimensi and pemanasan global, menerapkan hukum dasar kimia untuk menyelesaikan kasus dalam kehidupan sehari-hari, menganalisis interaksi makhluk hidup dalam ekosistemnya.</td></tr>
+                            <tr><td class="text-center no">7</td><td class="mapel">Ilmu Pengetahuan Sosial</td><td class="text-center nilai"><span class="badge">89</span></td><td class="kompetensi">Mencapai kompetensi dengan baik dalam hal menganalisis fenomena geografi dan pengaruhnya terhadap lingkungan geosfer (litosfer, atmosfer dan hidrosfer), menyusun rancangan dan instrumen, mengumpulkan dan menganalisis data penelitian sosial, menganalisis berbagai pasar, fungsi uang, sistem pembayaran, serta peran lembaga keuangan terhadap kegiatan ekonomi.</td></tr>
+                            <tr><td class="text-center no">8</td><td class="mapel">Informatika</td><td class="text-center nilai"><span class="badge">91</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal mengimplementasikan dan mengoperasikan aplikasi multimedia dalam mempraktikkan live streaming secara kreatif dan mandiri, menganalisis regulasi dan aspek hukum teknologi informasi berdasarkan UU ITE.</td></tr>
+                            <tr><td class="text-center no">9</td><td class="mapel">Pendidikan Jasmani, Olahraga, dan Kesehatan</td><td class="text-center nilai"><span class="badge">90</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal melakukan gerak keseimbangan dalam senam lantai dan gerakan senam baku anak indonesia hebat, melakukan gerakan meluncur dalam air dengan posisi tubuh yang benar, melakukan kegiatan peningkatan kebugaran jasmani dan teknik dasar tolak peluru dengan baik.</td></tr>
+                            <tr><td class="text-center no">10</td><td class="mapel">Seni dan Budaya</td><td class="text-center nilai"><span class="badge">91</span></td><td class="kompetensi">Mencapai kompetensi dengan sangat baik dalam hal menerapkan unsur gelap terang dalam suatu karya 2D dan membuat karya 3D.</td></tr>
+                            <tr><td class="text-center no">11</td><td class="mapel">Bahasa Mandarin</td><td class="text-center nilai"><span class="badge">89</span></td><td class="kompetensi">Mencapai kompetensi dengan baik dalam hal mengenali dan memahami kosakata ungkapan tentang arah jalan, saran, keinginan diri, hubungan rekan kerja dan perubahan diri, memahami kosakata dan grammar tentang kondisi seseorang, hobi, keadaan, lingkungan dan transportasi (Level Menengah).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="logout()" class="btn-logout">Kunci Kembali</button>
+    </div>
+</div>
+
+<script>
+    const PASSWORD_BENAR = "989898"; 
+    let batasSalah = 0;
+
+    function cekPassword() {
+        const input = document.getElementById("passwordInput").value;
+        const errorMsg = document.getElementById("error");
+
+        if (input === PASSWORD_BENAR) {
+            batasSalah = 0; 
+            errorMsg.style.display = "none";
+            jalankanTranskripSukses(); // Pemicu layar hijau & hitung mundur
+        } else {
+            batasSalah++;
+            document.getElementById("passwordInput").value = ""; 
+
+            if (batasSalah >= 3) {
+                mulaiLockout();
+            } else {
+                errorMsg.innerText = `Password salah! Sisa percobaan: ${3 - batasSalah}`;
+                errorMsg.style.display = "block";
+                errorMsg.style.animation = 'none';
+                errorMsg.offsetHeight; 
+                errorMsg.style.animation = null;
+            }
+        }
+    }
+
+    function jalankanTranskripSukses() {
+        const successScreen = document.getElementById("successScreen");
+        const successCountdownBox = document.getElementById("successCountdownBox");
+        const loginBox = document.getElementById("loginBox");
+        const raportBox = document.getElementById("raportBox");
+
+        // Tampilkan layar hijau penuh
+        successScreen.style.display = "flex";
+        
+        let waktuSisa = 3;
+        successCountdownBox.innerText = waktuSisa;
+
+        const intervalSukses = setInterval(() => {
+            waktuSisa--;
+            successCountdownBox.innerText = waktuSisa;
+
+            if (waktuSisa <= 0) {
+                clearInterval(intervalSukses);
+                
+                // Sembunyikan layar transisi hijau
+                successScreen.style.display = "none";
+                // Sembunyikan box login
+                loginBox.style.display = "none";
+                
+                // Tampilkan isi raport dengan animasi smooth glide up
+                raportBox.style.display = "block";
+                raportBox.classList.add("smooth-glide");
+            }
+        }, 1000);
+    }
+
+    function mulaiLockout() {
+        const lockoutScreen = document.getElementById("lockoutScreen");
+        const countdownBox = document.getElementById("countdownBox");
+        const errorMsg = document.getElementById("error");
+        
+        errorMsg.style.display = "none";
+        lockoutScreen.style.display = "flex";
+        
+        let waktuSisa = 30;
+        countdownBox.innerText = waktuSisa;
+
+        const interval = setInterval(() => {
+            waktuSisa--;
+            countdownBox.innerText = waktuSisa;
+
+            if (waktuSisa <= 0) {
+                clearInterval(interval);
+                lockoutScreen.style.display = "none";
+                batasSalah = 0; 
+                document.getElementById("loginSubtitle").innerText = "Silakan coba lagi, masukkan password Anda.";
+            }
+        }, 1000);
+    }
+
+    function toggleTab(element) {
+        const accordion = element.parentElement;
+        accordion.classList.toggle("active");
+    }
+
+    function logout() {
+        const loginBox = document.getElementById("loginBox");
+        const raportBox = document.getElementById("raportBox");
+        
+        raportBox.style.opacity = "0";
+        setTimeout(() => {
+            raportBox.style.display = "none";
+            raportBox.style.opacity = "1";
+            raportBox.classList.remove("smooth-glide"); // Reset class animasi
+            loginBox.style.display = "block";
+            document.getElementById("passwordInput").value = "";
+            document.getElementById("loginSubtitle").innerText = "Silakan masukkan password untuk melihat laporan hasil belajar Anda.";
+            
+            document.querySelectorAll('.tab-accordion').forEach(tab => {
+                tab.classList.remove('active');
+            });
+        }, 300);
+    }
+
+    document.getElementById("passwordInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            cekPassword();
+        }
+    });
+</script>
+
+</body>
+</html>
